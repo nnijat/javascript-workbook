@@ -7,6 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+// Checkers App Guide: https://gist.github.com/kevincolten/e1aaa8eb144874c30fa9077702060a47
+
 class Checker {
   //Your code here
   constructor(color) {
@@ -21,9 +23,6 @@ class Checker {
 // Note: Should create after Ckecker class
 const whiteChecker = new Checker('white');
 const blackChecker = new Checker('black');
-
-// Let Black checker starts
-let playerTurn = blackChecker;
 
 class Board {
   constructor() {
@@ -113,6 +112,30 @@ class Board {
       // Using row and column value to fill the board
       this.grid[blackRow][blackColumn] = blackChecker;
     }
+
+    // Helper method, to return the checker at that the particular spot on this.grid
+    this.selectChecker = function (row, col) {
+      return this.grid[row][col];
+    }
+  }
+
+  selectChecker(row, column) {
+    return this.grid[row][column];
+  }
+
+  // killChecker method take a single argument which is a coordinate pair
+  // Use selectChecker to grab the checker at the position given
+  // Find the index of that checker in the this.checkers array
+  // Then remove it by .splice()ing it out
+  // Then assign the position on this.grid to null. That checker is dead
+  killChecker(position) {
+    // selects the checker
+    let checker = this.selectChecker(position[0], position[1]);
+    // finds the index of the checker
+    let indexChecker = this.checkers.indexOf(checker);
+    // removes the selected checker from array checkers
+    this.checkers.splice(indexChecker, 1);
+    this.grid[position[0]][position[1]] = null;
   }
 }
 
@@ -120,11 +143,33 @@ class Game {
   constructor() {
     this.board = new Board;
   }
+
   start() {
     this.board.createGrid();
 
     // Create a board with filled white and black checkers
     this.board.createCheckers();
+  }
+
+  // Use helper method 'selectChecker' to select the checker ..
+  // at your starting rowcolumn coordinates and set it to a local variable checker
+  //check to see if the distance of the start row and the end row is 2 ..
+  // by finding the absolute value of the difference between the rows..
+  // that means you must have jumped a checker
+  // find the killPostition by finding the midpoint between ..
+  // the start and end positions. Then killChecker
+  moveChecker(start, end) {
+    let checker = this.board.selectChecker(start[0], start[1]);
+    this.board.grid[end[0]][end[1]] = checker;
+    this.board.grid[start[0]][start[1]] = null;
+    let distance = start[0] - end[0];
+    if (Math.abs(distance) === 2) {
+      // Calculates the midPoint if the absolute distance between two coordinates
+      let midRow = (Number(start[0]) + Number(end[0])) / 2;
+      let midCol = (Number(start[1]) + Number(end[1])) / 2;
+      let killPostition = [midRow, midCol];
+      this.board.killChecker(killPostition);
+    }
   }
 }
 
@@ -140,7 +185,6 @@ function getPrompt() {
 
 const game = new Game();
 game.start();
-
 
 // Tests
 if (typeof describe === 'function') {

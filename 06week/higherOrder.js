@@ -40,7 +40,6 @@ function reduce(arr, callback, accumulator) {
       }
     }
   }
-  console.log("Before return");
   return accumulator;
 }
 

@@ -28,7 +28,7 @@ function every(arr, callback) {
   // Your code here
 }*/
 
-function reduce(arr, callback, accumulator) {
+function reduce(arr, accumulator) {
   // Your code here
   accumulator = accumulator || 0;
   for (let index = 0; index < arr.length; index++) {
@@ -45,6 +45,13 @@ function reduce(arr, callback, accumulator) {
 
 function filter(arr, callback) {
   // Your code here
+  let newArray = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (callback(arr[i]) === true) {
+      newArray.push(arr[i]);
+    }
+  }
+  return newArray;
 }
 
 if (typeof describe === 'function') {
@@ -123,24 +130,19 @@ if (typeof describe === 'function') {
 
   describe('#reduce()', () => {
     it('should return array elements added together', () => {
-      const reduced = reduce([1, 2, 3], (acc, num) => {
-        return acc + num;
-      });
+      const reduced = reduce([1, 2, 3], 0);
       assert.deepEqual(reduced, 6);
     });
   });
 
-  // describe('#filter()', () => {
-  //   it('should return an array of items that pass the predicate test', () => {
-  //     const filtered = filter([1, 2, 3], (num) => {
-  //       return num % 2 === 0;
-  //     });
-  //     assert.deepEqual(filtered, [2]);
-  //   });
-  // });
-
+  describe('#filter()', () => {
+    it('should return an array of items that pass the predicate test', () => {
+      const filtered = filter([1, 2, 3], (num) => {
+        return num % 2 === 0;
+      });
+      assert.deepEqual(filtered, [2]);
+    });
+  });
 } else {
-
   console.log('Only run the tests on this one!')
-
 }

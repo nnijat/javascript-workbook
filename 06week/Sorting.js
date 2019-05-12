@@ -8,7 +8,7 @@ const stringsToNumbs = (numbers) => {
 }
 
 // With the same numbers, find the sum of the even values
-const sumEvens;
+const sumEvens = stringsToNumbs(strNums).filter(num => num % 2 === 0).reduce((acc, current) => acc + current);
 
 console.log(sumEvens);
 

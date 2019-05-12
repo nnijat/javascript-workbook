@@ -2,7 +2,7 @@ const strNums = ["1", "4", "1", "5", "9", "2", "6", "5", "3", "5", "8", "9", "7"
 
 // Given 1000 digits of PI as strings, return an array of the digits as numbers
 const stringsToNumbs = (numbers) => {
-    return numbers.map(function(num){
+    return numbers.map(function (num) {
         return Number(num);
     })
 }
@@ -13,9 +13,10 @@ const sumEvens = stringsToNumbs(strNums).filter(num => num % 2 === 0).reduce((ac
 console.log(sumEvens);
 
 // Find the index of the first value when added to it's index = 512 (#ATX!!)
-const atxIdx;
+const atxIdx = stringsToNumbs(strNums).findIndex((item, index) => item + index === 512);
 
-console.log(`index: ${atxIdx}, value: ${nums[atxIdx]}`);
+// Have to change ${nums[atxIdx]}`) to ${nums[atxIdx]}`)
+console.log(`index: ${atxIdx}, value: ${stringsToNumbs(strNums)[atxIdx]}`);
 
 const weather = [
     {
